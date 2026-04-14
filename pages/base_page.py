@@ -21,64 +21,30 @@ class BasePage:
         return self.driver.current_url.rstrip('/')
 
     def find_element(self, locator: tuple[str, str], timeout: int = 10):
-        #try:
-        #    return WebDriverWait(self.driver, timeout).until(ec.presence_of_element_located(locator),
-        #                                                     f"Can't find element by locator {locator}")
-        #except TimeoutError:
-        #    return None
         return WebDriverWait(self.driver, timeout).until(
         ec.presence_of_element_located(locator),
         f"Can't find element by locator {locator}"
     )
 
     def find_elements(self, locator: tuple[str, str], timeout: int = 10):
-        #try:
-        #    return WebDriverWait(self.driver, timeout).until(ec.presence_of_all_elements_located(locator))
-        #except TimeoutError:
-        #    return None
         return WebDriverWait(self.driver, timeout).until(
         ec.presence_of_all_elements_located(locator)
     )
 
     def click_element(self, locator: tuple[str, str], timeout: int = 10):
-        #element = self.find_element(locator, timeout)
-        #if element:
-        #    element.click()
-        #else:
-        #    return
         element = self.find_element(locator, timeout)
         if element:
             element.click()
 
     def enter_text(self, locator: tuple[str, str], text: str, timeout: int = 10):
-        #element = self.find_element(locator, timeout)
-        #if element:
-        #    element.clear()
-        #    element.send_keys(text)
-        #else:
-        #    return None
         element = self.find_element(locator, timeout)
         if element:
             element.clear()
             element.send_keys(text)
         
-    def element_is_visible(self, locator: tuple[str, str], timeout: int = 10) -> bool:              #
-        #try:
-        #    WebDriverWait(self.driver, timeout).until(ec.visibility_of_element_located(locator))
-        #    return True
-        #except TimeoutException:
-        #    return False    
+    def element_is_visible(self, locator: tuple[str, str], timeout: int = 10) -> bool:              #  
         WebDriverWait(self.driver, timeout).until(ec.visibility_of_element_located(locator))
         return True
-
-    #def element_is_present(self, locator: tuple[str, str], timeout: int = 10):
-        #try:
-        #    WebDriverWait(self.driver, timeout).until(ec.presence_of_element_located(locator))
-        #    return True
-        #except TimeoutError:
-        #    return False
-        #WebDriverWait(self.driver, timeout).until(ec.presence_of_element_located(locator))
-        #return True
 
     def scroll_to_element(self, locator: tuple[str, str], timeout: int = 10):
         self.driver.execute_script("arguments[0].scrollIntoView();", self.find_element(locator))
@@ -88,9 +54,6 @@ class BasePage:
     def accept_cookies(self):
         self.click_element(HomePageLocators.ACCEPT_COOKIES_BUTTON)
 
-    #def delete_all_cookies(self):
-    #    self.driver.delete_all_cookies()
-
     @allure.step('Нажать Enter для завершения выбора')
     def press_enter_button(self, locator: tuple[str, str], timeout: int = 10):
         self.find_element(locator, timeout).send_keys(Keys.ENTER)
@@ -98,10 +61,6 @@ class BasePage:
     @allure.step('Переключить вкладку по номеру')
     def switch_to(self, window_number: int = 1):
         self.driver.switch_to.window(self.driver.window_handles[window_number])
-
-    #@allure.step('Закрыть вкладку')
-    #def close_page(self):
-    #    self.driver.close()
 
     @allure.step('Дождаться отображения URL страницы')
     def wait_for_url(self, timeout: int = 10):

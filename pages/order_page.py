@@ -1,10 +1,6 @@
 import allure
-#import re
 from ..locators.order_page_locators import OrderPageLocators
 from ..pages.home_page import HomePage
-#from selenium.common.exceptions import TimeoutException
-#from selenium.webdriver.support.wait import WebDriverWait
-#from selenium.webdriver.support import expected_conditions  # as ec
 
 
 class OrderPage(HomePage):
@@ -79,10 +75,6 @@ class OrderPage(HomePage):
     @allure.step('Нажать кнопку "Да" в процессе оформления заказа')
     def click_yes_order_button(self):
         self.click_element(OrderPageLocators.YES_ORDER_BUTTON)
-
-    #@allure.step('Нажать кнопку "Посмотреть статус" после оформления заказа')
-    #def click_check_status_button(self):
-        #self.click_element(OrderPageLocators.CHECK_STATUS_BUTTON)
 
     @allure.step('Всплывающее окно с сообщением "Хотите оформить заказ?"')
     def want_to_order_header_visible(self, timeout: int = 10) -> bool:
